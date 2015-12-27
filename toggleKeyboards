@@ -5,6 +5,9 @@
 #			Toggle all keyboards
 #		./toggleKeyboards keyboard1 keyboardn
 #			Toggle all keyboards that match the input strings
+#
+# A list of keyboard names can be found under "xinput --list | awk '/slave/ && /keyboard/'"
+
 if [ ! -e "/usr/bin/xinput" ]; then
 	echo "xinput binary was not found in /usr/bin/xinput."
 	if [ ! -z `uname -r | grep ARCH` ]; then
@@ -37,5 +40,3 @@ done
 if [ ${#props[@]} -eq 0 ]; then
 	echo "Nothing happened."
 fi
-
-# TODO: detects os, recommend xinput install CL for each distro
