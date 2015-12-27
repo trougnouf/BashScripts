@@ -1,0 +1,15 @@
+#!/bin/bash
+# Disable an input device w/command line
+
+
+props=(8 9) # my current config
+
+for prop in $props;
+do
+	newstatus=`expr match 0 $(xinput --list-props $prop | grep "Device Enabled" | cut -f3)`
+	xinput set-int-prop $prop "Device Enabled" 8 $newstatus
+	echo "Keyboard status: $newstatus"
+done
+
+# TODO: accept names,numbers as parameters. default = detect keyboards. 
+# TODO: detects os, recommend xinput install CL for each distro
