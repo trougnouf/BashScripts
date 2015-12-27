@@ -1,0 +1,34 @@
+#!/bin/bash
+# Disable keyboards (cat protection and such)
+#
+# Usage:	./toggleKeyboards
+#			Toggle all keyboards
+#		./toggleKeyboards keyboard1 keyboardn
+#			Toggle all keyboards that match the input strings
+#
+
+if [ $# -ne 0 ]; then	# use arguments
+	props=()
+	for prop in $@;
+	do
+		props+=`xinput --list | awk "/$prop/ && /slave/ && /keyboard/" | cut -f2 | cut -c 4`
+		props=($props)	# separate array w/spaces for accurate count
+	done
+	
+else	# default: detect all keyboards:
+	props=`xinput --list | awk '/slave/ && /keyboard/' | cut -f2 | cut -c 4`
+fi
+
+# Disable keyboards found in $props
+for prop in ${props[@]};
+do
+	newstatus=`expr match 0 $(xinput --list-props $prop | grep "Device Enabled" | cut -f3)`
+	xinput set-int-prop $prop "Device Enabled" 8 $newstatus
+	echo "Toggled device $prop, status=$newstatus"
+done
+
+if [ ${#props[@]} -eq 0 ]; then
+	echo "Nothing happened."
+fi
+
+# TODO: detects os, recommend xinput install CL for each distro
