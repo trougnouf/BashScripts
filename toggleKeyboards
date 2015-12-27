@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# Disable keyboards (cat protection and such)
-#
+# Description:	Disable keyboards (for cat protection and such)
+# Author:	Benoit Brummer
+# Date:		2015-12-27
+# License:	GPLv3
+
 # Usage:	./toggleKeyboards
 #			Toggle all keyboards
-#		./toggleKeyboards keyboard1 keyboardn
+#		./toggleKeyboards keyboard1 G710 keyboardn
 #			Toggle all keyboards that match the input strings
-#
+
 # A list of keyboard names can be found under "xinput --list | awk '/slave/ && /keyboard/'"
 
 if [ ! -e "/usr/bin/xinput" ]; then
@@ -34,7 +37,7 @@ for prop in ${props[@]};
 do
 	newstatus=`expr match 0 $(xinput --list-props $prop | grep "Device Enabled" | cut -f3)`
 	xinput set-int-prop $prop "Device Enabled" 8 $newstatus
-	echo "Toggled device $prop, status=$newstatus"
+	echo "Toggled device $prop, status=$newstatus."
 done
 
 if [ ${#props[@]} -eq 0 ]; then
