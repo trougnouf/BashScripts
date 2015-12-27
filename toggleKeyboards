@@ -1,11 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Disable keyboards (cat protection and such)
 #
 # Usage:	./toggleKeyboards
 #			Toggle all keyboards
 #		./toggleKeyboards keyboard1 keyboardn
 #			Toggle all keyboards that match the input strings
-#
+if [ ! -e "/usr/bin/xinput" ]; then
+	echo "xinput binary was not found in /usr/bin/xinput."
+	if [ ! -z `uname -r | grep ARCH` ]; then
+		echo "Install xinput using the following command:"
+		echo "	# pacman -S xorg-xinput"
+	fi
+	exit 1
+fi
 
 if [ $# -ne 0 ]; then	# use arguments
 	props=()

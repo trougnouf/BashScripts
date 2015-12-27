@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# nothing to see here
+if [ ! -z `uname -r | grep ARCH` ]; then
+	echo "Arch"
+fi
