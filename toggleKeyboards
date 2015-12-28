@@ -6,10 +6,11 @@
 
 # Usage:	./toggleKeyboards
 #			Toggle all keyboards
-#		./toggleKeyboards keyboard1 G710 keyboardn
+#		./toggleKeyboards <keyboard1> <G710> <keyboardn>
 #			Toggle all keyboards that match the input strings
 
-# A list of keyboard names can be found under "xinput --list | awk '/slave/ && /keyboard/'"
+# A list of keyboard names can be found under
+#	xinput --list | awk '/slave/ && /keyboard/'
 
 if [ ! -e "/usr/bin/xinput" ]; then
 	echo "xinput binary was not found in /usr/bin/xinput."
