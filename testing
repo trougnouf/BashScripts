@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
-# nothing to see here
-if [ ! -z `uname -r | grep ARCH` ]; then
-	echo "Arch"
+if [ ! -e "/usr/bin/xinput" ]; then
+echo "xinput binary was not found in /usr/bin/xinput."
+exit 1
+fi
+if [ $# -ne 0 ];then
+props=()
+for prop in $@;
+do
+props+=`xinput --list | awk "/$prop/ && /slave/ && /keyboard/" | cut -f2 | cut -c 4`
+props=($props)
+done
+else
+props=`xinput --list | awk '/slave/ && /keyboard/' | cut -f2 | cut -c 4`
+fi
+for prop in ${props[@]};
+do
+newstatus=`expr match 0 $(xinput --list-props $prop | grep "Device Enabled" | cut -f3)`
+xinput set-int-prop $prop "Device Enabled" 8 $newstatus
+echo "Toggled device $prop, status=$newstatus."
+done
+if [ ${#props[@]} -eq 0 ]; then
+echo "Nothing happened."
 fi

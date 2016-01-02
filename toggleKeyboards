@@ -6,8 +6,10 @@
 
 # Usage:	./toggleKeyboards
 #			Toggle all keyboards
-#		./toggleKeyboards <keyboard1> <G710> <keyboardn>
-#			Toggle all keyboards that match the input strings
+#		./toggleKeyboards G710
+#		./toggleKeyboards id=9
+#		./toggleKeyboards keyboard fornicator
+#			Toggle all keyboards that match any of the parameters
 
 # A list of keyboard names can be found under
 #	xinput --list | awk '/slave/ && /keyboard/'
